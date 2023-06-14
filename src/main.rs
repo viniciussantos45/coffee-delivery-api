@@ -1,19 +1,22 @@
 pub mod config;
+pub mod controllers;
 pub mod models;
 
-use self::config::db::schema::coffees::dsl::*;
-use self::models::*;
-use coffee_delivery_api::establish_connection;
-use diesel::prelude::*;
+use crate::controllers::*;
 
-use axum::{routing::get, Router};
+use coffee_delivery_api::establish_connection;
+
+use axum::{
+    routing::{get, post},
+    Router,
+};
 
 #[tokio::main]
 async fn main() {
     // build our application with a single route
     let app: Router = Router::new()
-        .route("/", get(root))
-        .route("/create", get(create_coffee));
+        .route("/", get(coffee_controller::list_coffees))
+        .route("/create", post(coffee_controller::create_coffee));
     // .route("");
 
     // run it with hyper on localhost:3333
@@ -23,35 +26,4 @@ async fn main() {
         .serve(app.into_make_service())
         .await
         .unwrap();
-}
-
-async fn root() {
-    let connection = &mut establish_connection();
-    let results = coffees
-        .limit(5)
-        .select(Coffee::as_select())
-        .load(connection)
-        .expect("Error loading coffees");
-
-    println!("Displaying {} coffees", results.len());
-    for coffee in results {
-        println!("{}", coffee.coffee_name);
-        println!("-----------\n");
-        println!("{}", coffee.image_path);
-    }
-}
-
-async fn create_coffee() {
-    let connection = &mut establish_connection();
-
-    let new_coffee = NewCoffee {
-        id: "2",
-        coffee_name: "Cafe aq",
-        image_path: "deste_aqui",
-    };
-
-    diesel::insert_into(coffees)
-        .values(&new_coffee)
-        .execute(connection)
-        .expect("Error saving new coffee");
 }
