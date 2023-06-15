@@ -11,13 +11,8 @@ pub struct Coffee {
 
 #[derive(Insertable, Debug)]
 #[diesel(table_name = crate::config::db::schema::coffees)]
-// pub struct NewCoffee<'a> {
-//     pub id: &'a str,
-//     pub coffee_name: &'a str,
-//     pub image_path: &'a str,
-// }
-pub struct NewCoffee {
-    pub id: String,
-    pub coffee_name: String,
-    pub image_path: String,
+pub struct NewCoffee<'a> {
+    pub id: &'a str,
+    pub coffee_name: &'a str,
+    pub image_path: &'a str,
 }
