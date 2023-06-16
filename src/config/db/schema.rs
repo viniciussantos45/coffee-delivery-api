@@ -7,3 +7,14 @@ diesel::table! {
         image_path -> Text,
     }
 }
+
+diesel::table! {
+    users (id) {
+        id -> Text,
+        name -> Text,
+        email -> Text,
+        password -> Text,
+    }
+}
+
+diesel::allow_tables_to_appear_in_same_query!(coffees, users,);
