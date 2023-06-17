@@ -1,3 +1,4 @@
+pub mod auth;
 pub mod config;
 pub mod deserializers;
 pub mod handlers;
@@ -24,7 +25,7 @@ async fn main() {
         .route("/", get(coffee_handler::list_coffees))
         .route("/coffees/create", post(coffee_handler::create_coffee))
         .route("/users/create", post(user_handler::create_user))
-        .route("/session", post(user_handler::create_session))
+        .route("/session", post(auth_handler::authorize))
         .with_state(shared_state);
 
     // run it with hyper on localhost:3333

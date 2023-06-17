@@ -1,11 +1,11 @@
 use std::sync::Arc;
 
 use crate::config::db::schema::users::dsl::*;
-use crate::deserializers::user_deserializer::{CreateSessionBody, CreateUserBody};
+use crate::deserializers::user_deserializer::CreateUserBody;
 use crate::models::user::{NewUser, User};
 use crate::state::AppState;
 
-use bcrypt::{hash, verify};
+use bcrypt::hash;
 
 use axum::extract::State;
 use axum::{http::StatusCode, response::IntoResponse, Json};
@@ -49,27 +49,5 @@ pub async fn create_user(
     (
         StatusCode::CREATED,
         Json(json!({"message": "User created successfully"})),
-    )
-}
-
-pub async fn create_session(
-    State(state): State<Arc<AppState>>,
-    Json(payload): Json<CreateSessionBody>,
-) -> impl IntoResponse {
-    let connection = &mut state.db_pool.as_ref().expect("loaded").get().unwrap();
-
-    let user = users
-        .select(User::as_select())
-        .filter(email.eq(&payload.email))
-        .first(connection)
-        .expect("Error loading coffees");
-
-    if verify(&payload.password, &user.password).unwrap() {
-        return (StatusCode::OK, Json(json!({"message": "User checked"})));
-    }
-
-    (
-        StatusCode::BAD_REQUEST,
-        Json(json!({"message": "User not found"})),
     )
 }

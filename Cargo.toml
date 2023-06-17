@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-axum = "0.6"
+axum = {version = "0.6.18", features = ["headers"]}
 tokio = { version = "1", features = ["full"] }
 tower = "0.4.13"
 tower-http = "0.4.0"
@@ -15,7 +15,12 @@ serde = { version = "1", features = ["derive"] }
 dotenvy = "0.15"
 diesel = { version = "2.1.0", features = ["sqlite", "r2d2"]}
 futures = "0.3.28"
-axum-extra = { version = "0.7.4", features = ["typed-routing"] }
 uuid = { version = "1.3.4", features = ["v4"]}
 r2d2 = "0.8"
 bcrypt = "0.14.0"
+jsonwebtoken = "8.0"
+once_cell = "1.8"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+headers = "0.3.3"
+chrono = "0.4.26"

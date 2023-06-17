@@ -1,5 +1,6 @@
 use std::sync::Arc;
 
+use crate::auth::jwt_auth::Claims;
 use crate::state::AppState;
 use axum::extract::State;
 
@@ -35,7 +36,7 @@ pub async fn create_coffee(
     )
 }
 
-pub async fn list_coffees(State(state): State<Arc<AppState>>) {
+pub async fn list_coffees(_claims: Claims, State(state): State<Arc<AppState>>) {
     let connection = &mut state.db_pool.as_ref().expect("loaded").get().unwrap();
     let results: Vec<_> = coffees
         .limit(5)
