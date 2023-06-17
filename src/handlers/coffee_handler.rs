@@ -1,6 +1,5 @@
 use std::sync::Arc;
 
-use crate::auth::jwt_auth::Claims;
 use crate::state::AppState;
 use axum::extract::State;
 
@@ -23,6 +22,7 @@ pub async fn create_coffee(
         id: &uuid::Uuid::new_v4().to_string(),
         coffee_name: &payload.coffee_name,
         image_path: &payload.image_path,
+        price: &payload.price,
     };
 
     diesel::insert_into(coffees)
@@ -36,7 +36,10 @@ pub async fn create_coffee(
     )
 }
 
-pub async fn list_coffees(_claims: Claims, State(state): State<Arc<AppState>>) {
+pub async fn list_coffees(
+    // _claims: Claims,
+    State(state): State<Arc<AppState>>,
+) -> impl IntoResponse {
     let connection = &mut state.db_pool.as_ref().expect("loaded").get().unwrap();
     let results: Vec<_> = coffees
         .limit(5)
@@ -44,10 +47,5 @@ pub async fn list_coffees(_claims: Claims, State(state): State<Arc<AppState>>) {
         .load(connection)
         .expect("Error loading coffees");
 
-    println!("Displaying {} coffees", results.len());
-    for coffee in results {
-        println!("{}", coffee.coffee_name);
-        println!("-----------\n");
-        println!("{}", coffee.image_path);
-    }
+    (StatusCode::OK, Json(json!({ "coffees": results })))
 }

@@ -4,4 +4,5 @@ use serde::Deserialize;
 pub struct CreateCoffeeBody {
     pub coffee_name: String,
     pub image_path: String,
+    pub price: f64,
 }

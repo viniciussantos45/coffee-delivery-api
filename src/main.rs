@@ -20,15 +20,15 @@ async fn main() {
 
     let shared_state = Arc::new(AppState { db_pool: pool });
 
-    // build our application with a single route
     let app: Router = Router::new()
         .route("/", get(coffee_handler::list_coffees))
-        .route("/coffees/create", post(coffee_handler::create_coffee))
+        // .route("/coffees/create", post(coffee_handler::create_coffee))
         .route("/users/create", post(user_handler::create_user))
+        .route("/orders/create", post(order_handler::create_order))
+        .route("/orders/my_orders", get(order_handler::list_orders))
         .route("/session", post(auth_handler::authorize))
         .with_state(shared_state);
 
-    // run it with hyper on localhost:3333
     let server: &str = "0.0.0.0:3333";
 
     axum::Server::bind(&server.parse().unwrap())
