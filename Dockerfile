@@ -4,7 +4,7 @@ COPY . .
 
 RUN cargo install diesel_cli --no-default-features --features sqlite
 
-RUN diesel setup
+RUN diesel setup --database-url=$DATABASE_URL
 
 EXPOSE 3333
 
