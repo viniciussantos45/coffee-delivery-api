@@ -1,11 +1,13 @@
 FROM rust:1.65
 
-COPY . .
-
 RUN cargo install diesel_cli --no-default-features --features sqlite
+
+COPY . .
 
 RUN diesel setup --database-url=$DATABASE_URL
 
+RUN cargo install --path .
+
 EXPOSE 3333
 
-CMD ["cargo", "run", "--release"]
+CMD ["coffee-delivery-api"]
