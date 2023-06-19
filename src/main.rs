@@ -29,7 +29,7 @@ async fn main() {
         .route("/session", post(auth_handler::authorize))
         .with_state(shared_state);
 
-    let server: &str = "0.0.0.0:3333";
+    let server: &str = "0.0.0.0:10000";
 
     axum::Server::bind(&server.parse().unwrap())
         .serve(app.into_make_service())
