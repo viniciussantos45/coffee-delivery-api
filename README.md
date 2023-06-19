@@ -49,6 +49,10 @@ This project is licensed under the MIT License. See the LICENSE file for details
 - The `models` directory contains the data models used by the application. These models are used to represent coffee items, users, and orders.
 - The `schema` directory contains the database schema definitions used by the application. These schema definitions are used to create and modify the database tables.
 
+## Render upload
+
+Using Dockerfile for generate image to deply my api in render platform
+
 </br>
 </br>
 </br>
