@@ -8,6 +8,4 @@ RUN diesel setup --database-url=$DATABASE_URL
 
 RUN cargo install --path .
 
-EXPOSE 3333
-
 CMD ["coffee-delivery-api"]
