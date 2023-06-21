@@ -41,7 +41,6 @@ pub async fn list_coffees(
 ) -> impl IntoResponse {
     let connection = &mut state.db_pool.as_ref().expect("loaded").get().unwrap();
     let results: Vec<_> = coffees
-        .limit(5)
         .select(Coffee::as_select())
         .load(connection)
         .expect("Error loading coffees");
