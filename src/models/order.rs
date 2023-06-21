@@ -3,7 +3,7 @@ use serde::Serialize;
 
 #[derive(Queryable, Selectable, Serialize)]
 #[diesel(table_name = crate::config::db::schema::orders)]
-#[diesel(check_for_backend(diesel::sqlite::Sqlite))]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Order {
     pub id: String,
     pub user_id: String,

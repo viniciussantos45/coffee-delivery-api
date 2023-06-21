@@ -1,4 +1,5 @@
 use serde::Deserialize;
+use uuid::Uuid;
 
 #[derive(Deserialize)]
 pub struct CreateOrderBody {
@@ -16,6 +17,6 @@ pub struct CreateOrderBody {
 
 #[derive(Deserialize)]
 pub struct OrderItem {
-    pub coffee_id: String,
-    pub quantity: i32,
+    pub coffee_id: Uuid,
+    pub quantity: i64,
 }

@@ -1,10 +1,6 @@
 FROM rust:1.65
 
-RUN cargo install diesel_cli --no-default-features --features sqlite
-
 COPY . .
-
-RUN diesel migration run --database-url="sqlite://db.sqlite3"
 
 RUN cargo install --path .
 

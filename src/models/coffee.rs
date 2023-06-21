@@ -1,12 +1,14 @@
 use diesel::prelude::*;
 use serde::Serialize;
+use uuid::Uuid;
 
 #[derive(Queryable, Selectable, Serialize)]
 #[diesel(table_name = crate::config::db::schema::coffees)]
-#[diesel(check_for_backend(diesel::sqlite::Sqlite))]
+#[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Coffee {
-    pub id: String,
+    pub id: Uuid,
     pub coffee_name: String,
+    pub additions: Vec<Option<String>>,
     pub image_path: String,
     pub price: f64,
 }
@@ -14,7 +16,6 @@ pub struct Coffee {
 #[derive(Insertable, Debug)]
 #[diesel(table_name = crate::config::db::schema::coffees)]
 pub struct NewCoffee<'a> {
-    pub id: &'a str,
     pub coffee_name: &'a str,
     pub image_path: &'a str,
     pub price: &'a f64,

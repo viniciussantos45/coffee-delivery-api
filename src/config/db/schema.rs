@@ -2,10 +2,12 @@
 
 diesel::table! {
     coffees (id) {
-        id -> Text,
+        id -> Uuid,
         coffee_name -> Text,
+        additions -> Array<Nullable<Text>>,
+        description -> Text,
+        price -> Float8,
         image_path -> Text,
-        price -> Double,
     }
 }
 
@@ -13,9 +15,9 @@ diesel::table! {
     order_items (id) {
         id -> Text,
         order_id -> Text,
-        coffee_id -> Text,
-        quantity -> Integer,
-        unit_price -> Double,
+        coffee_id -> Uuid,
+        quantity -> Int8,
+        unit_price -> Float8,
     }
 }
 
@@ -32,7 +34,7 @@ diesel::table! {
         country -> Text,
         complement -> Text,
         payment_method -> Text,
-        total_price -> Double,
+        total_price -> Float8,
         created_at -> Timestamp,
     }
 }
@@ -50,9 +52,4 @@ diesel::joinable!(order_items -> coffees (coffee_id));
 diesel::joinable!(order_items -> orders (order_id));
 diesel::joinable!(orders -> users (user_id));
 
-diesel::allow_tables_to_appear_in_same_query!(
-    coffees,
-    order_items,
-    orders,
-    users,
-);
+diesel::allow_tables_to_appear_in_same_query!(coffees, order_items, orders, users,);

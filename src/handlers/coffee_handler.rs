@@ -19,7 +19,6 @@ pub async fn create_coffee(
     let connection = &mut state.db_pool.as_ref().expect("loaded").get().unwrap();
 
     let new_coffee: NewCoffee<'_> = NewCoffee {
-        id: &uuid::Uuid::new_v4().to_string(),
         coffee_name: &payload.coffee_name,
         image_path: &payload.image_path,
         price: &payload.price,

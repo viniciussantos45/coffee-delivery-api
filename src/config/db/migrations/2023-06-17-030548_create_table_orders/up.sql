@@ -12,7 +12,7 @@ CREATE TABLE orders(
     complement TEXT NOT NULL,
 
     payment_method TEXT NOT NULL,
-    total_price DECIMAL NOT NULL,
+    total_price DOUBLE PRECISION NOT NULL,
     
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id)
