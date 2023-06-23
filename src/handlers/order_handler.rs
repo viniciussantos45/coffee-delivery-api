@@ -108,7 +108,6 @@ pub async fn list_orders(
         .expect("Error loading coffees");
 
     let results: Vec<_> = orders
-        .limit(5)
         .select(Order::as_select())
         .filter(user_id.eq(&user.id))
         .load(connection)
