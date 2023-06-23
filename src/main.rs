@@ -5,17 +5,21 @@ pub mod handlers;
 pub mod models;
 pub mod state;
 
-use crate::handlers::*;
-use crate::state::AppState;
+use std::env;
+use std::sync::Arc;
+
 use axum::{
     http::Method,
     routing::{get, post},
     Router,
 };
-use coffee_delivery_api::config::db::connection_db::establish_connection;
-use std::sync::Arc;
+use headers::HeaderValue;
+use tower_http::cors::{Any, CorsLayer};
 
-use tower_http::cors::CorsLayer;
+use crate::handlers::*;
+use crate::state::AppState;
+
+use coffee_delivery_api::config::db::connection_db::establish_connection;
 
 #[tokio::main]
 async fn main() {
@@ -23,9 +27,12 @@ async fn main() {
 
     let shared_state = Arc::new(AppState { db_pool: pool });
 
+    let front_end_url = env::var("FRONT_URL").expect("FRONT_URL must be set");
+
     let cors = CorsLayer::new()
+        .allow_headers(Any)
         .allow_methods(vec![Method::GET, Method::POST])
-        .allow_origin(tower_http::cors::Any);
+        .allow_origin(front_end_url.parse::<HeaderValue>().unwrap());
 
     let app: Router = Router::new()
         .route("/", get(coffee_handler::list_coffees))
