@@ -8,6 +8,7 @@ use uuid::Uuid;
 pub struct Coffee {
     pub id: Uuid,
     pub coffee_name: String,
+    pub description: String,
     pub additions: Vec<Option<String>>,
     pub image_path: String,
     pub price: f64,
