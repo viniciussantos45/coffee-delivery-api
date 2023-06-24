@@ -1,7 +1,8 @@
+use chrono::NaiveDateTime;
 use diesel::prelude::*;
 use serde::Serialize;
 
-#[derive(Queryable, Selectable, Serialize)]
+#[derive(Queryable, Selectable, Serialize, Identifiable)]
 #[diesel(table_name = crate::config::db::schema::orders)]
 #[diesel(check_for_backend(diesel::pg::Pg))]
 pub struct Order {
@@ -17,6 +18,7 @@ pub struct Order {
     pub complement: String,
     pub payment_method: String,
     pub total_price: f64,
+    pub created_at: NaiveDateTime,
 }
 
 #[derive(Insertable, Debug)]

@@ -37,6 +37,7 @@ async fn main() {
     let app: Router = Router::new()
         .route("/", get(coffee_handler::list_coffees))
         .route("/users/create", post(user_handler::create_user))
+        .route("/me", post(user_handler::me))
         .route("/orders/create", post(order_handler::create_order))
         .route("/orders/my_orders", get(order_handler::list_orders))
         .route("/session", post(auth_handler::authorize))

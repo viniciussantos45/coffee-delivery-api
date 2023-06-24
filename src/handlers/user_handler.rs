@@ -1,5 +1,6 @@
 use std::sync::Arc;
 
+use crate::auth::jwt_auth::Claims;
 use crate::config::db::schema::users::dsl::*;
 use crate::deserializers::user_deserializer::CreateUserBody;
 use crate::models::user::{NewUser, User};
@@ -50,4 +51,16 @@ pub async fn create_user(
         StatusCode::CREATED,
         Json(json!({"message": "User created successfully"})),
     )
+}
+
+pub async fn me(claims: Claims, State(state): State<Arc<AppState>>) -> impl IntoResponse {
+    let connection = &mut state.db_pool.get().unwrap();
+
+    let user_loaded = users
+        .select(User::as_select())
+        .filter(email.eq(claims.sub))
+        .first::<User>(connection)
+        .expect("Error loading user");
+
+    (StatusCode::OK, Json(json!({ "user": user_loaded })))
 }

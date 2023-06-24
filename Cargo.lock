@@ -247,6 +247,7 @@ dependencies = [
  "iana-time-zone",
  "js-sys",
  "num-traits",
+ "serde",
  "time 0.1.45",
  "wasm-bindgen",
  "winapi",
@@ -328,6 +329,7 @@ checksum = "f7a532c1f99a0f596f6960a60d1e119e91582b24b39e2d83a190e61262c3ef0c"
 dependencies = [
  "bitflags 2.3.2",
  "byteorder",
+ "chrono",
  "diesel_derives",
  "itoa",
  "pq-sys",

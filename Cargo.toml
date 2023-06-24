@@ -13,7 +13,7 @@ tower-http = { version = "0.4.0", features = ["full"]}
 serde_json = "1"
 serde = { version = "1", features = ["derive"] }
 dotenvy = "0.15"
-diesel = { version = "2.1.0", features = ["postgres", "r2d2", "uuid"]}
+diesel = { version = "2.1.0", features = ["postgres", "r2d2", "uuid", "chrono"]}
 futures = "0.3.28"
 uuid = { version = "1.3.4", features = ["v4", "serde"]}
 r2d2 = "0.8"
@@ -23,4 +23,4 @@ once_cell = "1.8"
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 headers = "0.3.3"
-chrono = "0.4.26"
+chrono = {version = "0.4.26", features = ["serde"]}
