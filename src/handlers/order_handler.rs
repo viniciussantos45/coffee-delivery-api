@@ -60,7 +60,7 @@ pub async fn create_order(
         country: &payload.country,
         complement: &payload.complement,
         payment_method: &payload.payment_method,
-        total_price: &total_price_sum,
+        total_price: &(&total_price_sum + 3.5),
     };
 
     diesel::insert_into(orders)
