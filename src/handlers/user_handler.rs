@@ -18,7 +18,7 @@ pub async fn create_user(
     State(state): State<Arc<AppState>>,
     Json(payload): Json<CreateUserBody>,
 ) -> impl IntoResponse {
-    let connection = &mut state.db_pool.as_ref().expect("loaded").get().unwrap();
+    let connection = &mut state.db_pool.get().unwrap();
 
     let results: Vec<_> = users
         .limit(1)

@@ -16,7 +16,7 @@ pub async fn authorize(
     State(state): State<Arc<AppState>>,
     Json(payload): Json<AuthPayload>,
 ) -> Result<Json<AuthBody>, AuthError> {
-    let connection = &mut state.db_pool.as_ref().expect("loaded").get().unwrap();
+    let connection = &mut state.db_pool.get().unwrap();
 
     let user = users
         .select(User::as_select())

@@ -26,7 +26,7 @@ pub async fn create_order(
     State(state_app): State<Arc<AppState>>,
     Json(payload): Json<CreateOrderBody>,
 ) -> impl IntoResponse {
-    let connection = &mut state_app.db_pool.as_ref().expect("loaded").get().unwrap();
+    let connection = &mut state_app.db_pool.get().unwrap();
 
     let user = users
         .select(User::as_select())
@@ -99,7 +99,7 @@ pub async fn list_orders(
     claims: Claims,
     State(state_app): State<Arc<AppState>>,
 ) -> impl IntoResponse {
-    let connection = &mut state_app.db_pool.as_ref().expect("loaded").get().unwrap();
+    let connection = &mut state_app.db_pool.get().unwrap();
 
     let user = users
         .select(User::as_select())

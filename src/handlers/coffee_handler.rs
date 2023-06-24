@@ -16,7 +16,7 @@ pub async fn create_coffee(
     State(state): State<Arc<AppState>>,
     Json(payload): Json<CreateCoffeeBody>,
 ) -> impl IntoResponse {
-    let connection = &mut state.db_pool.as_ref().expect("loaded").get().unwrap();
+    let connection = &mut state.db_pool.get().unwrap();
 
     let new_coffee: NewCoffee<'_> = NewCoffee {
         coffee_name: &payload.coffee_name,
@@ -39,7 +39,7 @@ pub async fn list_coffees(
     // _claims: Claims,
     State(state): State<Arc<AppState>>,
 ) -> impl IntoResponse {
-    let connection = &mut state.db_pool.as_ref().expect("loaded").get().unwrap();
+    let connection = &mut state.db_pool.get().unwrap();
     let results: Vec<_> = coffees
         .select(Coffee::as_select())
         .load(connection)
