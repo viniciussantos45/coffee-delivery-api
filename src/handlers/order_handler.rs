@@ -109,6 +109,7 @@ pub async fn list_orders(
 
     let results: Vec<_> = orders
         .select(Order::as_select())
+        .order_by(created_at.desc())
         .filter(user_id.eq(&user.id))
         .load(connection)
         .expect("Error loading orders");

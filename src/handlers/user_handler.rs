@@ -62,5 +62,8 @@ pub async fn me(claims: Claims, State(state): State<Arc<AppState>>) -> impl Into
         .first::<User>(connection)
         .expect("Error loading user");
 
-    (StatusCode::OK, Json(json!({ "user": user_loaded })))
+    (
+        StatusCode::OK,
+        Json(json!({ "user": {"email": user_loaded.email} })),
+    )
 }
